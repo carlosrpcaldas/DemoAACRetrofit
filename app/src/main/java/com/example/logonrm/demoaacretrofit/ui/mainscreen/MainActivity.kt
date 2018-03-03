@@ -41,8 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
     })
 
-        mainViewModel.isLoading.observe( this, Observer { isLoading ->
-            if (isLoading) {
+        mainViewModel.isLoading.observe( this,
+                Observer { isLoading ->
+            if (isLoading!!) {
                 loading.visibility = View.VISIBLE
             } else {
                 loading.visibility = View.GONE
@@ -53,4 +54,4 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-}
+
