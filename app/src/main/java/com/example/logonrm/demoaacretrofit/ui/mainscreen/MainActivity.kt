@@ -20,17 +20,25 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProviders.of(
                 this).get(MainViewModel::class.java)
 
-    btPesquisar.setOnClickListener{
-        mainViewModel.pesquisarEndereco(etCEP.text.toString())
-    }
+        btPesquisar.setOnClickListener {
+            mainViewModel.pesquisarEndereco(etCEP.text.toString())
+        }
         mainViewModel.apiResponse.observe(this, Observer {
             apiResponse ->
             if (apiResponse?.erro == null) {
                 Log.i("TAG", "SUCESSO")
-            } else {
-                Log.i("TAG", "ERRO")
-            }
-        })
-    }
+                val end = apiResponse?.endereco
+                tvResultado.text =
+                        "Logradouro: ${end?.logradouro}\n" +
+                        "Complemento: ${end?.complemento}\n" +
+                        "Bairro: ${end?.bairro} " +
+                        "Localidade: ${end?.localidade} " +
+                        "UF: ${end?.uf}"
+
+        } else {
+            Log.i("TAG", "ERRO ${apiResponse.erro}...")
+        }
+    })
+}
 
 }
